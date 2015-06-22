@@ -11,3 +11,8 @@ std::ostream& DebugStream::getStream(std::string fileName, int lineNb)
     return debugFile;
 }
 
+DebugStream::~DebugStream()
+{
+    debugFile.close();
+}
+

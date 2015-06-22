@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     MsgServerControlReq m1;
     m1.command = ServerShutdown;
 
-    int error = msgsnd( msqid, &m1, sizeof(MsgServerControlReq), 0 );
+    int error = msgsnd( msqid, &m1, sizeof(ServerControlCommand), 0 );
     cout << "error = " << error << endl;
 
     return error;

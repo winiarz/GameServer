@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-Bin/SpaceStrategyServer 123&
-Bin/FirstTest 12
+Bin/SpaceStrategyServer 123 &
+Bin/FirstTest 123
 
 result=$?
 

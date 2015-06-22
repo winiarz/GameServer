@@ -12,6 +12,8 @@ public:
     }
 
     std::ostream& getStream(std::string, int);
+
+    ~DebugStream();
 private:
     DebugStream();
 
