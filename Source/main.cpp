@@ -4,9 +4,11 @@
 using namespace std;
 #include "MsgServerControlReq.hpp"
 #include "InitMessageQueue.hpp"
+#include "Debug.hpp"
 
 int main(int argc, char* argv[])
 {
+    DEBUG << "Server start!";
     int msqid = initMessageQueue(argc, argv);
 
     MsgServerControlReq m1;
@@ -16,14 +18,14 @@ int main(int argc, char* argv[])
         int error = msgrcv ( msqid, &m1, sizeof(MsgServerControlReq), 1, 0 );
         if (error < 0) 
         {
-            cout << "error during msgrcv: " << error << endl;
+            DEBUG << "error during msgrcv: " << error;
             return -1;
         }
-        cout << "Message received = '" << m1.command << "'\n";
+        DEBUG << "Message received = '" << m1.command << "'";
 
         if (m1.command == ServerShutdown) 
         {
-            cout << "Server shutdown!\n";
+            DEBUG << "Server shutdown!\n";
             break;
         }
     }
