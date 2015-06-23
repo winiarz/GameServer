@@ -1,8 +1,11 @@
 #!/bin/bash
 
+msgQueueId=123
+logsDir=logs
 
-Bin/SpaceStrategyServer 123 &
-Bin/FirstTest 123
+mkdir -p $logsDir
+Bin/SpaceStrategyServer $msgQueueId 2>&1 > $logsDir/server.out &
+Bin/FirstTest $msgQueueId 2>&1 > $logsDir/test.out &
 
 result=$?
 
@@ -13,4 +16,7 @@ else
     echo "FAIL"
 fi
 
-ipcrm -q `cat msgqid`
+wait
+ipcrm -q `cat msgqid` > /dev/null
+mv debug.txt $logsDir
+
