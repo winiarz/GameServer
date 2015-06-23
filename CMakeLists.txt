@@ -3,7 +3,7 @@ project( SpaceStrategyServer )
 
 set( CMAKE_CXX_FLAGS "-std=c++11" )
 
-include_directories("${PROJECT_BINARY_DIR}/Messages"
+include_directories("${PROJECT_BINARY_DIR}/Messages/Include"
                     "${PROJECT_BINARY_DIR}/Common/Include")
 
 add_executable(Bin/SpaceStrategyServer "Source/main.cpp"

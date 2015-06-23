@@ -2,7 +2,7 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 using namespace std;
-#include "MsgServerControlReq.hpp"
+#include "ServerInMessage.hpp"
 #include "InitMessageQueue.hpp"
 #include "Debug.hpp"
 
@@ -11,23 +11,32 @@ int main(int argc, char* argv[])
     DEBUG << "Server start!";
     int msqid = initMessageQueue(argc, argv);
 
-    MsgServerControlReq m1;
+    ServerInMessage m1;
 
     while (true) 
     {
-        int bytesReceived = msgrcv ( msqid, &m1, sizeof(ServerControlCommand), 1, MSG_NOERROR );
+        int bytesReceived = msgrcv ( msqid, &m1, sizeof(InnerServerInMessage), 1, MSG_NOERROR );
 
-        if (bytesReceived != sizeof(ServerControlCommand)) 
+        if (bytesReceived != sizeof(InnerServerInMessage)) 
         {
             DEBUG << "error during msgrcv: " << bytesReceived;
             return -1;
         }
 
-        DEBUG << "Message received = '" << m1.command << "'";
-
-        if (m1.command == ServerShutdown) 
+        switch (m1.msgType) 
         {
-            DEBUG << "Server shutdown!\n";
+        case msgIdServerControlReq:
+            DEBUG << "Message received = '" << m1.innerMessage.msgServerControlReq.command << "'";
+
+            if (m1.innerMessage.msgServerControlReq.command == ServerShutdown) 
+            {
+                DEBUG << "Server shutdown!";
+                return 0;
+            }
+            else if (m1.innerMessage.msgServerControlReq.command == ServerRestart) 
+            {
+                DEBUG << "Server restart!";
+            }
             break;
         }
     }
