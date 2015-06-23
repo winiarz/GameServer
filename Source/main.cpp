@@ -9,13 +9,13 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     DEBUG << "Server start!";
-    int msqid = initMessageQueue(argc, argv);
+    MessageQueuesIds queueIds = initMessageQueues(argc, argv);
 
     ServerInMessage m1;
 
     while (true) 
     {
-        int bytesReceived = msgrcv ( msqid, &m1, sizeof(InnerServerInMessage), 1, MSG_NOERROR );
+        int bytesReceived = msgrcv ( queueIds.inputQueue, &m1, sizeof(InnerServerInMessage), 1, MSG_NOERROR );
 
         if (bytesReceived != sizeof(InnerServerInMessage)) 
         {

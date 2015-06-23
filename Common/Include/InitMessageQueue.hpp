@@ -1,3 +1,9 @@
 
-int initMessageQueue(int argc, char* argv[]);
+struct MessageQueuesIds
+{
+    int inputQueue;
+    int outputQueue;
+};
+
+MessageQueuesIds initMessageQueues(int argc, char* argv[]);
 

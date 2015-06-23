@@ -5,24 +5,33 @@
 #include <fstream>
 using namespace std;
 
-int initMessageQueue(int argc, char* argv[])
+MessageQueuesIds initMessageQueues(int argc, char* argv[])
 {
-    if (argc <= 1) 
+    MessageQueuesIds queuesIds;
+
+    if (argc <= 2) 
     {
         cerr << "missing argument: queue key!\n";
-        return -1;
+        return queuesIds;
     }
-    key_t key = atoi(argv[1]);
 
-    int msgqid = msgget(ftok("/tmp", key), (IPC_CREAT | 0600));
+    key_t keyForInputQueue = atoi(argv[1]);
+    key_t keyForOutputQueue = atoi(argv[2]);
 
-    if (msgqid < 0) 
+    queuesIds.inputQueue = msgget(ftok("/tmp", keyForInputQueue), (IPC_CREAT | 0600));
+    if (queuesIds.inputQueue < 0) 
     {
-        cerr << "ERROR: msgqid = " << msgqid << endl;
+        cerr << "ERROR: msgqid = " << queuesIds.inputQueue << endl;
+    }
+
+    queuesIds.outputQueue = msgget(ftok("/tmp", keyForOutputQueue), (IPC_CREAT | 0600));
+    if (queuesIds.outputQueue < 0) 
+    {
+        cerr << "ERROR: msgqid = " << queuesIds.outputQueue << endl;
     }
 
     ofstream msgqidFile ("msgqid");
-    msgqidFile << msgqid;
-    return msgqid;
+    msgqidFile << queuesIds.inputQueue;
+    return queuesIds;
 }
 
