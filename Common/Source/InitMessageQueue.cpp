@@ -5,6 +5,17 @@
 #include <fstream>
 using namespace std;
 
+int initQueue(char keyStr[])
+{
+    key_t key = atoi(keyStr);
+    int msgid = msgget(ftok("/tmp", key), (IPC_CREAT | 0600));
+    if (msgid < 0) 
+    {
+        cerr << "ERROR: msgqid = " << msgid << endl;
+    }
+    return msgid;
+}
+
 MessageQueuesIds initMessageQueues(int argc, char* argv[])
 {
     MessageQueuesIds queuesIds;
@@ -15,23 +26,14 @@ MessageQueuesIds initMessageQueues(int argc, char* argv[])
         return queuesIds;
     }
 
-    key_t keyForInputQueue = atoi(argv[1]);
-    key_t keyForOutputQueue = atoi(argv[2]);
+    queuesIds.inputQueue = initQueue(argv[1]);
+    queuesIds.outputQueue = initQueue(argv[2]);
 
-    queuesIds.inputQueue = msgget(ftok("/tmp", keyForInputQueue), (IPC_CREAT | 0600));
-    if (queuesIds.inputQueue < 0) 
-    {
-        cerr << "ERROR: msgqid = " << queuesIds.inputQueue << endl;
-    }
-
-    queuesIds.outputQueue = msgget(ftok("/tmp", keyForOutputQueue), (IPC_CREAT | 0600));
-    if (queuesIds.outputQueue < 0) 
-    {
-        cerr << "ERROR: msgqid = " << queuesIds.outputQueue << endl;
-    }
-
-    ofstream msgqidFile ("msgqid");
+    ofstream msgqidFile ("msgqid1");
     msgqidFile << queuesIds.inputQueue;
+
+    ofstream msgqidFile2 ("msgqid2");
+    msgqidFile2 << queuesIds.outputQueue;
     return queuesIds;
 }
 

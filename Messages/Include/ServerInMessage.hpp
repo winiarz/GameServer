@@ -1,3 +1,4 @@
+#pragma once
 #include "MsgServerControlReq.hpp"
 #include "MsgServerStatusReq.hpp"
 

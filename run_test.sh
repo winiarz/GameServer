@@ -18,7 +18,10 @@ else
     echo "FAIL"
 fi
 
+
+sleep 1
+ipcrm -q `cat msgqid1` > /dev/null
+ipcrm -q `cat msgqid2` > /dev/null
 wait
-ipcrm -q `cat msgqid` > /dev/null
 mv debug.txt $logsDir
 

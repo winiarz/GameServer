@@ -5,6 +5,9 @@ using namespace std;
 #include "ServerInMessage.hpp"
 #include "InitMessageQueue.hpp"
 #include "Debug.hpp"
+#include "ServerOutMessage.hpp"
+
+bool isServerRunning = false;
 
 int main(int argc, char* argv[])
 {
@@ -15,7 +18,7 @@ int main(int argc, char* argv[])
 
     while (true) 
     {
-        int bytesReceived = msgrcv ( queueIds.inputQueue, &m1, sizeof(InnerServerInMessage), 1, MSG_NOERROR );
+        int bytesReceived = msgrcv ( queueIds.inputQueue, &m1, sizeof(InnerServerInMessage), 0, MSG_NOERROR );
 
         if (bytesReceived != sizeof(InnerServerInMessage)) 
         {
@@ -26,17 +29,39 @@ int main(int argc, char* argv[])
         switch (m1.msgType) 
         {
         case msgIdServerControlReq:
-            DEBUG << "Message received = '" << m1.innerMessage.msgServerControlReq.command << "'";
-
-            if (m1.innerMessage.msgServerControlReq.command == ServerShutdown) 
+            DEBUG << "Server controll received = '" << m1.innerMessage.msgServerControlReq.command << "'";
+            switch (m1.innerMessage.msgServerControlReq.command) 
             {
+            case ServerShutdown:
                 DEBUG << "Server shutdown!";
                 return 0;
-            }
-            else if (m1.innerMessage.msgServerControlReq.command == ServerRestart) 
-            {
+                break;
+
+            case ServerRestart:
                 DEBUG << "Server restart!";
+                break;
+
+            case Start:
+                DEBUG << "Server start!";
+                isServerRunning = true;
+                break;
+
+            case Pause:
+                DEBUG << "Server is Paused!";
+                isServerRunning = false;
+                break;
             }
+            break;
+        case msgServerStatusReq:
+            DEBUG << "Server status req received";
+            MsgServerStatusResp resp;
+            resp.isServerRunning = isServerRunning;
+
+            ServerOutMessage serverOutMessage;
+            serverOutMessage.msgType = msgServerStatusResp;
+            serverOutMessage.innerMessage.msgServerStatusResp = resp;
+
+            msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
             break;
         }
     }
