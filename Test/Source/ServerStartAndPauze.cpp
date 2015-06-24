@@ -7,6 +7,17 @@ using namespace std;
 #include "InitMessageQueue.hpp"
 #include "getServerStatus.hpp"
 
+void sendMessage(const MessageQueuesIds& queuesIds,
+                 ServerInMessage& message)
+{
+    int error = msgsnd( queuesIds.outputQueue, &message, sizeof(InnerServerInMessage), 0 );
+    if (error != 0) 
+    {
+        cerr << "error in sending message: " << error << endl;
+        exit(-1);
+    }
+}
+
 int main(int argc, char* argv[])
 {
     MessageQueuesIds queueIds = initMessageQueues(argc, argv);
@@ -14,7 +25,8 @@ int main(int argc, char* argv[])
     ServerInMessage m1;
     m1.msgType = msgIdServerControlReq;
     m1.innerMessage.msgServerControlReq.command = ServerRestart;
-    int error = msgsnd( queueIds.outputQueue, &m1, sizeof(InnerServerInMessage), 0 );
+
+    sendMessage(queueIds, m1);
 
     bool isServerRunning = getServerStatus(queueIds);
     if (isServerRunning) 
@@ -24,7 +36,7 @@ int main(int argc, char* argv[])
     }
 
     m1.innerMessage.msgServerControlReq.command = Start;
-    error = msgsnd( queueIds.outputQueue, &m1, sizeof(InnerServerInMessage), 0 );
+    sendMessage(queueIds, m1);
 
     isServerRunning = getServerStatus(queueIds);
     if (not isServerRunning) 
@@ -34,9 +46,8 @@ int main(int argc, char* argv[])
     }
 
     m1.innerMessage.msgServerControlReq.command = ServerShutdown;
-    error = msgsnd( queueIds.outputQueue, &m1, sizeof(InnerServerInMessage), 0 );
-    cout << "error = " << error << endl;
+    sendMessage(queueIds, m1);
 
-    return error;
+    return 0;
 }
 
