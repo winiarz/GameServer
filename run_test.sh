@@ -8,6 +8,9 @@ logsDir=logs
 mkdir -p $logsDir
 Bin/SpaceStrategyServer $msgQueueId $msgQueueId2 2>&1 > $logsDir/server.out &
 Bin/FirstTest $msgQueueId2 $msgQueueId           2>&1 > $logsDir/test.out &
+testPid=$!
+
+wait $testPid
 
 result=$?
 
@@ -18,10 +21,10 @@ else
     echo "FAIL"
 fi
 
-
-sleep 1
 ipcrm -q `cat msgqid1` > /dev/null
 ipcrm -q `cat msgqid2` > /dev/null
-wait
+rm msgqid1 msgqid2
+
+
 mv debug.txt $logsDir
 
