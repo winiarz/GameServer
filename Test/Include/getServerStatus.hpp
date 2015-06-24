@@ -1,4 +1,5 @@
 #include "InitMessageQueue.hpp"
 
-bool getServerStatus(const MessageQueuesIds& queueIds);
+bool isServerRunning(const MessageQueuesIds& queueIds);
+int getServerTime(const MessageQueuesIds& queueIds);
 

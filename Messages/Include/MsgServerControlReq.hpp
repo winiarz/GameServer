@@ -6,7 +6,8 @@ enum ServerControlCommand
     ServerShutdown,
     ServerRestart,
     Start,
-    Pause
+    Pause,
+    SecondElapsed
 };
 
 struct MsgServerControlReq

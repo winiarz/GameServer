@@ -8,6 +8,7 @@ using namespace std;
 #include "ServerOutMessage.hpp"
 
 bool isServerRunning = false;
+int secondsCounter = 0;
 
 int main(int argc, char* argv[])
 {
@@ -50,13 +51,17 @@ int main(int argc, char* argv[])
                 DEBUG << "Server is Paused!";
                 isServerRunning = false;
                 break;
+            case SecondElapsed:
+                if (isServerRunning) 
+                 secondsCounter++;
             }
             break;
         case msgServerStatusReq:
             DEBUG << "Server status req received";
             MsgServerStatusResp resp;
             resp.isServerRunning = isServerRunning;
-
+            resp.secondsCounter = secondsCounter;
+            
             ServerOutMessage serverOutMessage;
             serverOutMessage.msgType = msgServerStatusResp;
             serverOutMessage.innerMessage.msgServerStatusResp = resp;

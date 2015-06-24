@@ -11,7 +11,15 @@ add_executable(Bin/SpaceStrategyServer "Source/main.cpp"
                                        "Common/Source/InitMessageQueue.cpp"
                                        "Common/Source/Debug.cpp")
 
+
 add_executable(Bin/Test/ServerStartAndPauze "Test/Source/ServerStartAndPauze.cpp"
                                             "Test/Source/getServerStatus.cpp"
-                                            "Common/Source/InitMessageQueue.cpp")
+                                            "Common/Source/InitMessageQueue.cpp"
+                                            "Test/Source/sendMessage.cpp"
+                                            )
+
+add_executable(Bin/Test/TimeElapsed "Test/Source/TimeElapsed.cpp"
+                                    "Test/Source/getServerStatus.cpp"
+                                    "Common/Source/InitMessageQueue.cpp"
+                                    "Test/Source/sendMessage.cpp")
 
