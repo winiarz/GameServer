@@ -6,6 +6,8 @@ using namespace std;
 #include "InitMessageQueue.hpp"
 #include "Debug.hpp"
 #include "ServerOutMessage.hpp"
+#include"UserContainer.hpp"
+
 
 bool isServerRunning = false;
 int secondsCounter = 0;
@@ -16,6 +18,7 @@ int main(int argc, char* argv[])
     MessageQueuesIds queueIds = initMessageQueues(argc, argv);
 
     ServerInMessage m1;
+    UserContainer userContainer;
 
     while (true) 
     {
@@ -56,7 +59,7 @@ int main(int argc, char* argv[])
                  secondsCounter++;
             }
             break;
-        case msgServerStatusReq:
+        case msgIdServerStatusReq:
             DEBUG << "Server status req received";
             MsgServerStatusResp resp;
             resp.isServerRunning = isServerRunning;
@@ -67,6 +70,9 @@ int main(int argc, char* argv[])
             serverOutMessage.innerMessage.msgServerStatusResp = resp;
 
             msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+            break;
+        case msgIdUserRegisterReq:
+            userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password);
             break;
         }
     }

@@ -9,7 +9,7 @@ using namespace std;
 bool isServerRunning(const MessageQueuesIds& queueIds)
 {
     ServerInMessage statusReq;
-    statusReq.msgType = msgServerStatusReq;
+    statusReq.msgType = msgIdServerStatusReq;
     int error = msgsnd( queueIds.outputQueue, &statusReq, sizeof(InnerServerInMessage), 0 );
     if (error) 
     {
@@ -31,7 +31,7 @@ bool isServerRunning(const MessageQueuesIds& queueIds)
 int getServerTime(const MessageQueuesIds& queueIds)
 {
     ServerInMessage statusReq;
-    statusReq.msgType = msgServerStatusReq;
+    statusReq.msgType = msgIdServerStatusReq;
     int error = msgsnd( queueIds.outputQueue, &statusReq, sizeof(InnerServerInMessage), 0 );
     if (error) 
     {
