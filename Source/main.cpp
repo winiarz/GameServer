@@ -7,7 +7,7 @@ using namespace std;
 #include "Debug.hpp"
 #include "ServerOutMessage.hpp"
 #include"UserContainer.hpp"
-//#include"MsgUserRegisterResp.hpp"
+
 
 
 bool isServerRunning = false;
@@ -73,10 +73,15 @@ int main(int argc, char* argv[])
             msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
             break;
         case msgIdUserRegisterReq:
-        if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password);
+        if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password, queueIds);
             else
             {
-            // - fail - server not running
+            MsgUserRegisterResp resp;
+            resp.userRegisterStatus = ServerNotRunning;
+            ServerOutMessage serverOutMessage;
+            serverOutMessage.msgType = msgIdUserRegisterResp;
+            serverOutMessage.innerMessage.msgUserRegisterResp = resp;
+            msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
             }
             break;
         }

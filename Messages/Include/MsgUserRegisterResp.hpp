@@ -1,4 +1,6 @@
-//jakies ID trzeba
+#pragma once
+const long msgIdUserRegisterResp = 5;
+
 enum UserRegisterStatus
 {
      RegisterSuccessful,
