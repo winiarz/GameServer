@@ -4,24 +4,31 @@
 #include"MsgUserRegisterResp.hpp"
 void UserContainer::addUser (char username[], char password[])
 {
-this -> userRegisterResp(username);
-strcpy (usernames[currentNumberOfUsers], username);
-strcpy (passwords[currentNumberOfUsers], password);
-currentNumberOfUsers++;// bo nigdzie tego nie robie chyba
-//  - register successful
+    if ( this -> isRegisterPossible(username) )
+        {
+        strcpy (usernames[currentNumberOfUsers], username);
+        strcpy (passwords[currentNumberOfUsers], password);
+        currentNumberOfUsers++;
+        //  - register successful
+        }
 }
-void  UserContainer::userRegisterResp(char username[])
+bool  UserContainer::isRegisterPossible(char username[])
 {
-    if (currentNumberOfUsers == maxUsersNumber) {}//  "fail - too many users"
+    bool possibleToRegist = true;
+    if (currentNumberOfUsers == maxUsersNumber)
+     {
+     possibleToRegist = false;
+     }//  "fail - too many users"
     else
     {
         for(int i=0;i<currentNumberOfUsers;i++)
         {
             if (strcmp( usernames [i], username ) == 0)
             {
+            possibleToRegist = false;
             // kolejka grzecznie prosze wyslij  "- fail - username already used"
             }
         }
     }
-
+    return possibleToRegist;
 }

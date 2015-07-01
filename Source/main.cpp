@@ -73,8 +73,11 @@ int main(int argc, char* argv[])
             msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
             break;
         case msgIdUserRegisterReq:
-        if (isServerRunning==true) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password);
-            else // - fail - server not running
+        if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password);
+            else
+            {
+            // - fail - server not running
+            }
             break;
         }
     }
