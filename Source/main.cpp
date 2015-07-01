@@ -7,6 +7,7 @@ using namespace std;
 #include "Debug.hpp"
 #include "ServerOutMessage.hpp"
 #include"UserContainer.hpp"
+//#include"MsgUserRegisterResp.hpp"
 
 
 bool isServerRunning = false;
@@ -20,21 +21,21 @@ int main(int argc, char* argv[])
     ServerInMessage m1;
     UserContainer userContainer;
 
-    while (true) 
+    while (true)
     {
         int bytesReceived = msgrcv ( queueIds.inputQueue, &m1, sizeof(InnerServerInMessage), 0, MSG_NOERROR );
 
-        if (bytesReceived != sizeof(InnerServerInMessage)) 
+        if (bytesReceived != sizeof(InnerServerInMessage))
         {
             DEBUG << "error during msgrcv: " << bytesReceived;
             return -1;
         }
 
-        switch (m1.msgType) 
+        switch (m1.msgType)
         {
         case msgIdServerControlReq:
             DEBUG << "Server controll received = '" << m1.innerMessage.msgServerControlReq.command << "'";
-            switch (m1.innerMessage.msgServerControlReq.command) 
+            switch (m1.innerMessage.msgServerControlReq.command)
             {
             case ServerShutdown:
                 DEBUG << "Server shutdown!";
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
                 isServerRunning = false;
                 break;
             case SecondElapsed:
-                if (isServerRunning) 
+                if (isServerRunning)
                  secondsCounter++;
             }
             break;
@@ -64,7 +65,7 @@ int main(int argc, char* argv[])
             MsgServerStatusResp resp;
             resp.isServerRunning = isServerRunning;
             resp.secondsCounter = secondsCounter;
-            
+
             ServerOutMessage serverOutMessage;
             serverOutMessage.msgType = msgServerStatusResp;
             serverOutMessage.innerMessage.msgServerStatusResp = resp;
@@ -72,7 +73,8 @@ int main(int argc, char* argv[])
             msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
             break;
         case msgIdUserRegisterReq:
-            userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password);
+        if (isServerRunning==true) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password);
+            else // - fail - server not running
             break;
         }
     }
