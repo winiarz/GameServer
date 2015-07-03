@@ -65,23 +65,16 @@ int main(int argc, char* argv[])
             MsgServerStatusResp resp;
             resp.isServerRunning = isServerRunning;
             resp.secondsCounter = secondsCounter;
-
             ServerOutMessage serverOutMessage;
             serverOutMessage.msgType = msgServerStatusResp;
             serverOutMessage.innerMessage.msgServerStatusResp = resp;
-
             msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
             break;
         case msgIdUserRegisterReq:
         if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password, queueIds);
             else
             {
-            MsgUserRegisterResp resp;
-            resp.userRegisterStatus = ServerNotRunning;
-            ServerOutMessage serverOutMessage;
-            serverOutMessage.msgType = msgIdUserRegisterResp;
-            serverOutMessage.innerMessage.msgUserRegisterResp = resp;
-            msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+            sendingUserRegisterStatus (ServerNotRunning, queueIds);
             }
             break;
         }

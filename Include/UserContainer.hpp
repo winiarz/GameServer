@@ -1,4 +1,5 @@
 #include "InitMessageQueue.hpp"
+#include"MsgUserRegisterResp.hpp"
 
 class UserContainer
 {
@@ -11,3 +12,4 @@ private:
     char usernames [maxUsersNumber][30];
     char passwords [maxUsersNumber][30];
 };
+void sendingUserRegisterStatus (UserRegisterStatus , MessageQueuesIds );

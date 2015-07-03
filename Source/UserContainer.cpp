@@ -6,6 +6,18 @@
 #include "InitMessageQueue.hpp"
 #include "ServerOutMessage.hpp"
 #include"MsgUserRegisterResp.hpp"
+#include "SendingFunctions.cpp"
+void sendingUserRegisterStatus (UserRegisterStatus userRegisterStatus, MessageQueuesIds queueIds)
+{
+    MsgUserRegisterResp resp;
+    resp.userRegisterStatus = userRegisterStatus;
+    ServerOutMessage serverOutMessage;
+    serverOutMessage.msgType = msgIdUserRegisterResp;
+    serverOutMessage.innerMessage.msgUserRegisterResp = resp;
+    msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+}
+
+
 void UserContainer::addUser (char username[], char password[], MessageQueuesIds queueIds)
 {
     if ( this -> isRegisterPossible(username, queueIds) )
@@ -13,12 +25,7 @@ void UserContainer::addUser (char username[], char password[], MessageQueuesIds 
         strcpy (usernames[currentNumberOfUsers], username);
         strcpy (passwords[currentNumberOfUsers], password);
         currentNumberOfUsers++;
-            MsgUserRegisterResp resp;
-            resp.userRegisterStatus = RegisterSuccessful;
-            ServerOutMessage serverOutMessage;
-            serverOutMessage.msgType = msgIdUserRegisterResp;
-            serverOutMessage.innerMessage.msgUserRegisterResp = resp;
-            msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+        sendingUserRegisterStatus (RegisterSuccessful, queueIds);
         }
 }
 bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueIds)
@@ -27,13 +34,8 @@ bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueI
     if (currentNumberOfUsers == maxUsersNumber)
      {
      possibleToRegist = false;
-     MsgUserRegisterResp resp;
-     resp.userRegisterStatus = TooManyUsers;
-     ServerOutMessage serverOutMessage;
-     serverOutMessage.msgType = msgIdUserRegisterResp;
-     serverOutMessage.innerMessage.msgUserRegisterResp = resp;
-     msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
-     }//  "fail - too many users"
+     sendingUserRegisterStatus (TooManyUsers, queueIds);
+     }
     else
     {
         for(int i=0;i<currentNumberOfUsers;i++)
@@ -41,13 +43,7 @@ bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueI
             if (strcmp( usernames [i], username ) == 0)
             {
             possibleToRegist = false;
-            MsgUserRegisterResp resp;
-            resp.userRegisterStatus = UsernameAlreadyUsed;
-            ServerOutMessage serverOutMessage;
-            serverOutMessage.msgType = msgIdUserRegisterResp;
-            serverOutMessage.innerMessage.msgUserRegisterResp = resp;
-            msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
-            // kolejka grzecznie prosze wyslij  "- fail - username already used"
+            sendingUserRegisterStatus (UsernameAlreadyUsed, queueIds);
             }
         }
     }

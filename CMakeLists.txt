@@ -11,7 +11,8 @@ include_directories("${PROJECT_BINARY_DIR}/Messages/Include"
 add_executable(Bin/SpaceStrategyServer "Source/main.cpp"
                                        "Common/Source/InitMessageQueue.cpp"
                                        "Common/Source/Debug.cpp"
-                                       "Source/UserContainer.cpp")
+                                       "Source/UserContainer.cpp"
+				       "Source/SendingFunctions.cpp")
 
 
 add_executable(Bin/Test/ServerStartAndPauze "Test/Source/ServerStartAndPauze.cpp"
