@@ -11,7 +11,7 @@ bool isServerRunning(const MessageQueuesIds& queueIds)
     ServerInMessage statusReq;
     statusReq.msgType = msgIdServerStatusReq;
     int error = msgsnd( queueIds.outputQueue, &statusReq, sizeof(InnerServerInMessage), 0 );
-    if (error) 
+    if (error)
     {
         cout << "error in sending server status req!" << endl;
         exit(-1);
@@ -20,9 +20,9 @@ bool isServerRunning(const MessageQueuesIds& queueIds)
     ServerOutMessage statusResp;
     msgrcv ( queueIds.inputQueue, &statusResp, sizeof(InnerServerOutMessage), 0, MSG_NOERROR );
 
-    if (statusResp.msgType != msgServerStatusResp) 
+    if (statusResp.msgType != msgIdServerStatusResp)
     {
-        cout << "wrong message received: " << statusResp.msgType << " expected: " << msgServerStatusResp << endl;
+        cout << "wrong message received: " << statusResp.msgType << " expected: " << msgIdServerStatusResp << endl;
         exit(-1);
     }
     return statusResp.innerMessage.msgServerStatusResp.isServerRunning;
@@ -33,16 +33,16 @@ int getServerTime(const MessageQueuesIds& queueIds)
     ServerInMessage statusReq;
     statusReq.msgType = msgIdServerStatusReq;
     int error = msgsnd( queueIds.outputQueue, &statusReq, sizeof(InnerServerInMessage), 0 );
-    if (error) 
+    if (error)
     {
         cout << "error in sending server status req!" << endl;
         exit(-1);
     }
     ServerOutMessage statusResp;
     msgrcv ( queueIds.inputQueue, &statusResp, sizeof(InnerServerOutMessage), 0, MSG_NOERROR );
-    if (statusResp.msgType != msgServerStatusResp) 
+    if (statusResp.msgType != msgIdServerStatusResp)
     {
-        cout << "wrong message received: " << statusResp.msgType << " expected: " << msgServerStatusResp << endl;
+        cout << "wrong message received: " << statusResp.msgType << " expected: " << msgIdServerStatusResp << endl;
         exit(-1);
     }
     return statusResp.innerMessage.msgServerStatusResp.secondsCounter;

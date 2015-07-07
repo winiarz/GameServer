@@ -6,16 +6,8 @@
 #include "InitMessageQueue.hpp"
 #include "ServerOutMessage.hpp"
 #include"MsgUserRegisterResp.hpp"
-#include "SendingFunctions.cpp"
-void sendingUserRegisterStatus (UserRegisterStatus userRegisterStatus, MessageQueuesIds queueIds)
-{
-    MsgUserRegisterResp resp;
-    resp.userRegisterStatus = userRegisterStatus;
-    ServerOutMessage serverOutMessage;
-    serverOutMessage.msgType = msgIdUserRegisterResp;
-    serverOutMessage.innerMessage.msgUserRegisterResp = resp;
-    msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
-}
+#include "SendingFunctions.hpp"
+
 
 
 void UserContainer::addUser (char username[], char password[], MessageQueuesIds queueIds)

@@ -1,5 +1,5 @@
 
-const long msgServerStatusResp = 3;
+const long msgIdServerStatusResp = 3;
 
 struct MsgServerStatusResp
 {

@@ -7,7 +7,7 @@ using namespace std;
 #include "Debug.hpp"
 #include "ServerOutMessage.hpp"
 #include"UserContainer.hpp"
-
+#include"SendingFunctions.hpp"
 
 
 bool isServerRunning = false;
@@ -62,13 +62,7 @@ int main(int argc, char* argv[])
             break;
         case msgIdServerStatusReq:
             DEBUG << "Server status req received";
-            MsgServerStatusResp resp;
-            resp.isServerRunning = isServerRunning;
-            resp.secondsCounter = secondsCounter;
-            ServerOutMessage serverOutMessage;
-            serverOutMessage.msgType = msgServerStatusResp;
-            serverOutMessage.innerMessage.msgServerStatusResp = resp;
-            msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+            sendingServerStatus (isServerRunning, secondsCounter, queueIds);
             break;
         case msgIdUserRegisterReq:
         if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password, queueIds);
