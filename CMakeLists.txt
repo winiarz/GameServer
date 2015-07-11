@@ -26,3 +26,8 @@ add_executable(Bin/Test/TimeElapsed "Test/Source/TimeElapsed.cpp"
                                     "Common/Source/InitMessageQueue.cpp"
                                     "Test/Source/sendMessage.cpp")
 
+
+add_executable(Bin/Test/RegisterUser "Test/Source/userRegister.cpp"
+				     "Test/Source/tryToRegisterUser.cpp"
+				     "Common/Source/InitMessageQueue.cpp"
+				     "Test/Source/sendMessage.cpp")
