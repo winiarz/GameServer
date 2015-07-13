@@ -11,10 +11,9 @@ using namespace std;
 int main(int argc, char* argv[])
 {
     MessageQueuesIds queueIds = initMessageQueues(argc, argv);
+    startServer (queueIds);
     ServerInMessage m1;
     m1.msgType = msgIdServerControlReq;
-    m1.innerMessage.msgServerControlReq.command = Start;
-    sendMessage(queueIds, m1);
     m1.innerMessage.msgServerControlReq.command = SecondElapsed;
     sendMessage(queueIds, m1);
 
@@ -25,8 +24,7 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
-    m1.innerMessage.msgServerControlReq.command = ServerShutdown;
-    sendMessage(queueIds, m1);
+    shutdownServer (queueIds);
 
     return 0;
 }

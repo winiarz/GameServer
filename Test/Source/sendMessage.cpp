@@ -16,3 +16,18 @@ void sendMessage(const MessageQueuesIds& queuesIds,
         exit(-1);
     }
 }
+
+void startServer (const MessageQueuesIds& queuesIds)
+{
+    ServerInMessage m1;
+    m1.msgType = msgIdServerControlReq;
+    m1.innerMessage.msgServerControlReq.command = Start;
+    sendMessage(queuesIds, m1);
+}
+void shutdownServer (const MessageQueuesIds& queuesIds)
+{
+    ServerInMessage m1;
+    m1.msgType = msgIdServerControlReq;
+    m1.innerMessage.msgServerControlReq.command = ServerShutdown;
+    sendMessage(queuesIds, m1);
+}
