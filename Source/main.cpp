@@ -10,6 +10,7 @@ using namespace std;
 #include"SendingFunctions.hpp"
 
 
+
 bool isServerRunning = false;
 int secondsCounter = 0;
 
@@ -70,6 +71,9 @@ int main(int argc, char* argv[])
             {
             sendingUserRegisterStatus (ServerNotRunning, queueIds);
             }
+            break;
+	case msgIdLogingReq:
+	    userContainer.loginUser(m1.innerMessage.msgLogingReq.userName, m1.innerMessage.msgLogingReq.password, queueIds);
             break;
         }
     }

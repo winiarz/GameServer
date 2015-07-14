@@ -6,6 +6,8 @@ class UserContainer
 public:
     void addUser (char username[], char password[], MessageQueuesIds queueIds);
     bool  isRegisterPossible(char username[], MessageQueuesIds queueIds);
+    void loginUser (char username[], char password[], MessageQueuesIds queueIds);
+    bool  isLogingPossible(char username[],char password[], MessageQueuesIds queueIds);
 private:
     int static const maxUsersNumber = 100;
     int currentNumberOfUsers = 0;
