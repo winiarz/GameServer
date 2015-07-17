@@ -7,12 +7,16 @@
 #include "ServerOutMessage.hpp"
 #include"MsgUserRegisterResp.hpp"
 #include "SendingFunctions.hpp"
-
+#include"SessionIdContainer.hpp"
+UserContainer::UserContainer (): sessionIdContainer ()
+{
+    
+}
 void UserContainer::loginUser (char username[], char password[], MessageQueuesIds queueIds)
 {
    this -> isLogingPossible(username, password, queueIds);
 }
-bool  UserContainer::isLogingPossible(char username[],char password[], MessageQueuesIds queueIds)
+void  UserContainer::isLogingPossible(char username[],char password[], MessageQueuesIds queueIds)
 {
     for (int i=0;i<=currentNumberOfUsers;i++)
     {
@@ -20,18 +24,22 @@ bool  UserContainer::isLogingPossible(char username[],char password[], MessageQu
 	{
 	   if (strcmp( passwords [i], password )==0)
 	   {
-	     sendingUserLogingStatus (LogingSuccessful, queueIds);
-	      return true;
+	     if (sessionIdContainer.assignUserSessionId (i))
+	     {
+	       sendingUserLogingStatus (LogingSuccessful, queueIds);
+	     } 
+	     else sendingUserLogingStatus (UserAlreadyLoged, queueIds);
+	      return;
 	   }
 	   else
 	   {
 	     sendingUserLogingStatus (InvalidUserNameOrPass, queueIds);
-	     return false;
+	     return;
 	   }
 	}
     }
     sendingUserLogingStatus (InvalidUserNameOrPass, queueIds);
-    return false;
+    return;
 }
 void UserContainer::addUser (char username[], char password[], MessageQueuesIds queueIds)
 {
@@ -39,6 +47,7 @@ void UserContainer::addUser (char username[], char password[], MessageQueuesIds 
         {
         strcpy (usernames[currentNumberOfUsers], username);
         strcpy (passwords[currentNumberOfUsers], password);
+	
         currentNumberOfUsers++;
         sendingUserRegisterStatus (RegisterSuccessful, queueIds);
         }

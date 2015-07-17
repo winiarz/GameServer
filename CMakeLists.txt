@@ -12,7 +12,9 @@ add_executable(Bin/SpaceStrategyServer "Source/main.cpp"
                                        "Common/Source/InitMessageQueue.cpp"
                                        "Common/Source/Debug.cpp"
                                        "Source/UserContainer.cpp"
-				       "Source/SendingFunctions.cpp")
+				       "Source/SendingFunctions.cpp"
+				       "Source/SessionIdContainer.cpp"
+				       )
 
 
 add_executable(Bin/Test/ServerStartAndPauze "Test/Source/ServerStartAndPauze.cpp"

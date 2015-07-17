@@ -4,7 +4,8 @@ const long msgIdLogingResp = 8;
 enum LogingStatus
 {
      LogingSuccessful,
-     InvalidUserNameOrPass
+     InvalidUserNameOrPass,
+     UserAlreadyLoged
 };
 struct MsgLogingResp
 {

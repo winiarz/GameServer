@@ -10,7 +10,6 @@ using namespace std;
 #include"SendingFunctions.hpp"
 
 
-
 bool isServerRunning = false;
 int secondsCounter = 0;
 
