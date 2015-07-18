@@ -26,19 +26,19 @@ void  UserContainer::isLogingPossible(char username[],char password[], MessageQu
 	   {
 	     if (sessionIdContainer.assignUserSessionId (i))
 	     {
-	       sendingUserLogingStatus (LogingSuccessful, queueIds);
+	       sendingUserLogingStatus (LogingSuccessful,sessionIdContainer.getSessionId (i), queueIds);
 	     } 
-	     else sendingUserLogingStatus (UserAlreadyLoged, queueIds);
+	     else sendingUserLogingStatus (UserAlreadyLoged, -1, queueIds);
 	      return;
 	   }
 	   else
 	   {
-	     sendingUserLogingStatus (InvalidUserNameOrPass, queueIds);
+	     sendingUserLogingStatus (InvalidUserNameOrPass, -1, queueIds);
 	     return;
 	   }
 	}
     }
-    sendingUserLogingStatus (InvalidUserNameOrPass, queueIds);
+    sendingUserLogingStatus (InvalidUserNameOrPass, -1, queueIds);
     return;
 }
 void UserContainer::addUser (char username[], char password[], MessageQueuesIds queueIds)

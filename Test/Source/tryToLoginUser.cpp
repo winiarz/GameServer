@@ -8,7 +8,7 @@
 #include "ServerOutMessage.hpp"
 
 using namespace std;
-void tryToLoginUser (string username, string pass, LogingStatus expectedResult, const MessageQueuesIds& queueIds)
+int tryToLoginUser (string username, string pass, LogingStatus expectedResult, const MessageQueuesIds& queueIds)
 {
   ServerInMessage m1;
   m1.msgType=msgIdLogingReq;
@@ -23,5 +23,5 @@ void tryToLoginUser (string username, string pass, LogingStatus expectedResult, 
 	     << " expected: " << expectedResult << endl;
         exit(-1);
     }
-
+   return logingResp.innerMessage.msgLogingResp.sessionId;
 }

@@ -5,7 +5,6 @@
 #include "InitMessageQueue.hpp"
 #include "ServerOutMessage.hpp"
 #include"MsgUserRegisterResp.hpp"
-
 #include"SendingFunctions.hpp"
 void sendingUserRegisterStatus (UserRegisterStatus userRegisterStatus, MessageQueuesIds queueIds)
 {
@@ -26,11 +25,11 @@ void sendingServerStatus (bool isServerRunning, int secondsCounter, MessageQueue
     serverOutMessage.innerMessage.msgServerStatusResp = resp;
     msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
 }
-void sendingUserLogingStatus (LogingStatus logingStatus, MessageQueuesIds queueIds)
+void sendingUserLogingStatus (LogingStatus logingStatus, int sessionId, MessageQueuesIds queueIds)
 {
   MsgLogingResp resp;
   resp.logingStatus = logingStatus;
-  resp.sessionId = 0;
+  resp.sessionId = sessionId;
   ServerOutMessage serverOutMessage;
   serverOutMessage.msgType = msgIdLogingResp;
   serverOutMessage.innerMessage.msgLogingResp = resp;
