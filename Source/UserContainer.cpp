@@ -16,7 +16,7 @@ void UserContainer::loginUser (char username[], char password[], MessageQueuesId
 {
    this -> isLogingPossible(username, password, queueIds);
 }
-void  UserContainer::isLogingPossible(char username[],char password[], MessageQueuesIds queueIds)
+void UserContainer::isLogingPossible(char username[],char password[], MessageQueuesIds queueIds) // tryToLogin
 {
     for (int i=0;i<=currentNumberOfUsers;i++)
     {

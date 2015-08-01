@@ -4,3 +4,4 @@ void sendMessage(const MessageQueuesIds& queuesIds,
                  ServerInMessage& message);
 void startServer (const MessageQueuesIds& queuesIds);
 void shutdownServer (const MessageQueuesIds& queuesIds);
+void timeElapsed(int seconds, MessageQueuesIds& queueIds);

@@ -1,4 +1,13 @@
 #pragma once
+
+
+
+struct Session
+{
+  int sessionId;
+  int timeOfAutoLogout;
+};
+
 class SessionIdContainer
 {
 public:
@@ -7,6 +16,7 @@ SessionIdContainer ();
 int getSessionId (int userId);
 private:
 int static const maxSessionIds = 100;
-int sessionIds[maxSessionIds];
+int static const unusedSessionId = -1;
+Session sessionIds[maxSessionIds];
 
 };

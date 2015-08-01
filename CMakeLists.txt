@@ -45,3 +45,9 @@ add_executable(Bin/Test/LoginUser2 "Test/Source/LogingUser2.cpp"
 				     "Test/Source/tryToRegisterUser.cpp"
 				     "Common/Source/InitMessageQueue.cpp"
 				     "Test/Source/sendMessage.cpp")	
+				     
+add_executable(Bin/Test/LoginUser3 "Test/Source/logingUser3.cpp"
+				     "Test/Source/tryToLoginUser.cpp"
+				     "Test/Source/tryToRegisterUser.cpp"
+				     "Common/Source/InitMessageQueue.cpp"
+				     "Test/Source/sendMessage.cpp")	

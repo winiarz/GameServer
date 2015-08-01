@@ -9,12 +9,13 @@ using namespace std;
 #include"UserContainer.hpp"
 #include"SendingFunctions.hpp"
 
+int secondsCounter;
 
 bool isServerRunning = false;
-int secondsCounter = 0;
 
 int main(int argc, char* argv[])
 {
+    secondsCounter = 0;
     DEBUG << "Server start!";
     MessageQueuesIds queueIds = initMessageQueues(argc, argv);
 
@@ -56,13 +57,15 @@ int main(int argc, char* argv[])
                 isServerRunning = false;
                 break;
             case SecondElapsed:
-                if (isServerRunning)
+               if (isServerRunning)
+		{
                  secondsCounter++;
+		}
             }
             break;
         case msgIdServerStatusReq:
             DEBUG << "Server status req received";
-            sendingServerStatus (isServerRunning, secondsCounter, queueIds);
+            sendingServerStatus (isServerRunning,  queueIds);
             break;
         case msgIdUserRegisterReq:
         if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password, queueIds);

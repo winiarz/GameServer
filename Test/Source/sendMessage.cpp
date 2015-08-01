@@ -6,6 +6,17 @@ using namespace std;
 #include "ServerOutMessage.hpp"
 #include "getServerStatus.hpp"
 
+void timeElapsed(int seconds, MessageQueuesIds& queueIds)
+{
+   ServerInMessage m1;
+   m1.msgType = msgIdServerControlReq;
+   m1.innerMessage.msgServerControlReq.command = SecondElapsed;
+  for(int i=0;i<seconds;i++)
+  {
+    sendMessage(queueIds, m1);
+  }
+}
+
 void sendMessage(const MessageQueuesIds& queuesIds,
                  ServerInMessage& message)
 {

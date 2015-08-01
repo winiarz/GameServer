@@ -1,6 +1,9 @@
+#pragma once
 #include "InitMessageQueue.hpp"
 #include"MsgUserRegisterResp.hpp"
 #include"SessionIdContainer.hpp"
+
+extern int secondsCounter;
 
 class UserContainer
 {

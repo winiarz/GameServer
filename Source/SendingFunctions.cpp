@@ -6,6 +6,8 @@
 #include "ServerOutMessage.hpp"
 #include"MsgUserRegisterResp.hpp"
 #include"SendingFunctions.hpp"
+#include"UserContainer.hpp"
+
 void sendingUserRegisterStatus (UserRegisterStatus userRegisterStatus, MessageQueuesIds queueIds)
 {
     MsgUserRegisterResp resp;
@@ -15,7 +17,7 @@ void sendingUserRegisterStatus (UserRegisterStatus userRegisterStatus, MessageQu
     serverOutMessage.innerMessage.msgUserRegisterResp = resp;
     msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
 }
-void sendingServerStatus (bool isServerRunning, int secondsCounter, MessageQueuesIds queueIds)
+void sendingServerStatus (bool isServerRunning,  MessageQueuesIds queueIds)
 {
     MsgServerStatusResp resp;
     resp.isServerRunning = isServerRunning;
