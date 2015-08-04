@@ -8,10 +8,18 @@
 #include"MsgUserRegisterResp.hpp"
 #include "SendingFunctions.hpp"
 #include"SessionIdContainer.hpp"
+#include "Universe.hpp"
+#include"MsgGetPlanetListResp.hpp"
 UserContainer::UserContainer (): sessionIdContainer ()
 {
-    
+  
 }
+void UserContainer::assignMotherPlanet ()
+{
+  Universe& universe = Universe::getUniverse();
+  user[currentNumberOfUsers].planets[0] = universe.randomFreePlanet();
+}
+
 void UserContainer::loginUser (char username[], char password[], MessageQueuesIds queueIds)
 {
    this -> isLogingPossible(username, password, queueIds);
@@ -20,9 +28,9 @@ void UserContainer::isLogingPossible(char username[],char password[], MessageQue
 {
     for (int i=0;i<=currentNumberOfUsers;i++)
     {
-	if (strcmp( usernames[i], username )==0)
+	if (strcmp( user[i].username, username )==0)
 	{
-	   if (strcmp( passwords [i], password )==0)
+	   if (strcmp(user[i].password, password )==0)
 	   {
 	     if (sessionIdContainer.assignUserSessionId (i))
 	     {
@@ -45,9 +53,9 @@ void UserContainer::addUser (char username[], char password[], MessageQueuesIds 
 {
     if ( this -> isRegisterPossible(username, queueIds) )
         {
-        strcpy (usernames[currentNumberOfUsers], username);
-        strcpy (passwords[currentNumberOfUsers], password);
-	
+        strcpy (user[currentNumberOfUsers].username, username);
+        strcpy (user[currentNumberOfUsers].password, password);
+	assignMotherPlanet ();
         currentNumberOfUsers++;
         sendingUserRegisterStatus (RegisterSuccessful, queueIds);
         }
@@ -64,7 +72,7 @@ bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueI
     {
         for(int i=0;i<currentNumberOfUsers;i++)
         {
-            if (strcmp( usernames [i], username ) == 0)
+            if (strcmp(user[i].username, username ) == 0)
             {
             possibleToRegist = false;
             sendingUserRegisterStatus (UsernameAlreadyUsed, queueIds);

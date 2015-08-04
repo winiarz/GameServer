@@ -14,6 +14,8 @@ add_executable(Bin/SpaceStrategyServer "Source/main.cpp"
                                        "Source/UserContainer.cpp"
 				       "Source/SendingFunctions.cpp"
 				       "Source/SessionIdContainer.cpp"
+				       "Source/Planet.cpp"
+				       "Source/Universe.cpp"
 				       )
 
 

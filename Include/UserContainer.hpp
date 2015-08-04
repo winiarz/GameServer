@@ -2,8 +2,15 @@
 #include "InitMessageQueue.hpp"
 #include"MsgUserRegisterResp.hpp"
 #include"SessionIdContainer.hpp"
+#include"MsgGetPlanetListResp.hpp"
 
 extern int secondsCounter;
+struct User
+{
+  char username [30];
+  char password [30];
+  PlanetCoordinates planets[maxPlanetsPerUserNumber];
+};
 
 class UserContainer
 {
@@ -12,12 +19,12 @@ public:
     bool  isRegisterPossible(char username[], MessageQueuesIds queueIds);
     void loginUser (char username[], char password[], MessageQueuesIds queueIds);
     void  isLogingPossible(char username[],char password[], MessageQueuesIds queueIds);
+    void assignMotherPlanet ();
     UserContainer ();
 private:
     int static const maxUsersNumber = 100;
     int currentNumberOfUsers = 0;
     SessionIdContainer sessionIdContainer;
-    char usernames [maxUsersNumber][30];
-    char passwords [maxUsersNumber][30];
+    User user[maxUsersNumber];
 };
 void sendingUserRegisterStatus (UserRegisterStatus , MessageQueuesIds );

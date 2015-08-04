@@ -8,6 +8,9 @@ using namespace std;
 #include "ServerOutMessage.hpp"
 #include"UserContainer.hpp"
 #include"SendingFunctions.hpp"
+#include <cstdlib>
+#include <cstdio>
+#include <ctime>
 
 int secondsCounter;
 
@@ -15,6 +18,7 @@ bool isServerRunning = false;
 
 int main(int argc, char* argv[])
 {
+    srand( time( NULL ) );
     secondsCounter = 0;
     DEBUG << "Server start!";
     MessageQueuesIds queueIds = initMessageQueues(argc, argv);
