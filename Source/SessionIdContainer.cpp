@@ -5,15 +5,27 @@ SessionIdContainer::SessionIdContainer ()
 {
   for(int i=0;i<=maxSessionIds;i++)
   {
-    sessionIds[i].sessionId = unusedSessionId;
+    sessionIds[i].userId = unusedSessionId;
     sessionIds[i].timeOfAutoLogout = 0;
   }
+}
+int SessionIdContainer::getUserId (int sessionId)
+{
+  return sessionIds[sessionId].userId;
+}
+bool SessionIdContainer::isUserLoged (int sessionId)
+{
+  for(int i=0;i<=maxSessionIds;i++)
+  {
+    if (i == sessionId) return true;
+  }
+  return false;
 }
 int SessionIdContainer::getSessionId (int userId)
 {
   for(int i=0;i<=maxSessionIds;i++)
   {
-    if(sessionIds[i].sessionId == userId)
+    if(sessionIds[i].userId == userId)
     {
       return i;
     }
@@ -37,9 +49,9 @@ bool SessionIdContainer::assignUserSessionId (int userId)
   }
   for(int i=0;i<=maxSessionIds;i++)
   {
-    if(sessionIds[i].sessionId < 0)
+    if(sessionIds[i].userId < 0)
     {
-      sessionIds[i].sessionId = userId;
+      sessionIds[i].userId = userId;
       sessionIds[i].timeOfAutoLogout = secondsCounter;
       return true;
     }

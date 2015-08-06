@@ -4,13 +4,15 @@
 
 struct Session
 {
-  int sessionId;
+  int userId;
   int timeOfAutoLogout;
 };
 
 class SessionIdContainer
 {
 public:
+int getUserId (int sessionId);
+bool isUserLoged (int sessionId);
 bool assignUserSessionId (int userId);
 SessionIdContainer ();
 int getSessionId (int userId);

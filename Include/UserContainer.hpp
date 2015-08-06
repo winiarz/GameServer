@@ -9,12 +9,14 @@ struct User
 {
   char username [30];
   char password [30];
+  int currentPlanetsNumber;
   PlanetCoordinates planets[maxPlanetsPerUserNumber];
 };
 
 class UserContainer
 {
 public:
+    void getPlanetList (int sessionId, MessageQueuesIds queueIds); 
     void addUser (char username[], char password[], MessageQueuesIds queueIds);
     bool  isRegisterPossible(char username[], MessageQueuesIds queueIds);
     void loginUser (char username[], char password[], MessageQueuesIds queueIds);
@@ -28,3 +30,4 @@ private:
     User user[maxUsersNumber];
 };
 void sendingUserRegisterStatus (UserRegisterStatus , MessageQueuesIds );
+void sendingUserPlanetsList (int currentPlanetsNumber, PlanetCoordinates planets[], MessageQueuesIds queueIds);

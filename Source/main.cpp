@@ -11,7 +11,6 @@ using namespace std;
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
-
 int secondsCounter;
 
 bool isServerRunning = false;
@@ -81,6 +80,9 @@ int main(int argc, char* argv[])
 	case msgIdLogingReq:
 	    userContainer.loginUser(m1.innerMessage.msgLogingReq.userName, m1.innerMessage.msgLogingReq.password, queueIds);
             break;
+	case msgIdGetPlanetListReq:
+	  userContainer.getPlanetList (m1.innerMessage.msgGetPlanetListReq.sessionId, queueIds);
+	  break;
         }
     }
 }

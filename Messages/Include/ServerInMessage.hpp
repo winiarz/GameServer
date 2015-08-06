@@ -3,6 +3,7 @@
 #include "MsgServerStatusReq.hpp"
 #include "MsgUserRegisterReq.hpp"
 #include "MsgLogingReq.hpp"
+#include "MsgGetPlanetListReq.hpp"
 
 union InnerServerInMessage
 {
@@ -10,6 +11,7 @@ union InnerServerInMessage
     MsgServerStatusReq msgServerStatusReq;
     MsgUserRegisterReq msgUserRegisterReq;
     MsgLogingReq msgLogingReq;
+    MsgGetPlanetListReq msgGetPlanetListReq;
     
 };
 

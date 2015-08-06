@@ -37,4 +37,17 @@ void sendingUserLogingStatus (LogingStatus logingStatus, int sessionId, MessageQ
   serverOutMessage.innerMessage.msgLogingResp = resp;
   msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
 }
+void sendingUserPlanetsList (int currentPlanetsNumber, PlanetCoordinates planets[], MessageQueuesIds queueIds)
+{
+  MsgGetPlanetListResp resp;
+  resp.currentPlanetsNumber = currentPlanetsNumber;
+  for (int i=0; i<currentPlanetsNumber;i++)
+  {
+    resp.planetsCoordinates [i] = planets [i];
+  }
+  ServerOutMessage serverOutMessage;
+  serverOutMessage.msgType = msgIdGetPlanetListResp;
+  serverOutMessage.innerMessage.msgGetPlanetListResp = resp;
+  msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+}
 

@@ -14,10 +14,21 @@ UserContainer::UserContainer (): sessionIdContainer ()
 {
   
 }
+void UserContainer::getPlanetList (int sessionId, MessageQueuesIds queueIds)
+{
+  if (sessionIdContainer.isUserLoged (sessionId))
+  {
+    int userId = sessionIdContainer.getUserId (sessionId);
+    sendingUserPlanetsList (user[userId].currentPlanetsNumber, user[userId].planets, queueIds);
+  }
+  
+}
+
 void UserContainer::assignMotherPlanet ()
 {
   Universe& universe = Universe::getUniverse();
   user[currentNumberOfUsers].planets[0] = universe.randomFreePlanet();
+  user[currentNumberOfUsers].currentPlanetsNumber = 1; 
 }
 
 void UserContainer::loginUser (char username[], char password[], MessageQueuesIds queueIds)
