@@ -16,6 +16,7 @@ add_executable(Bin/SpaceStrategyServer "Source/main.cpp"
 				       "Source/SessionIdContainer.cpp"
 				       "Source/Planet.cpp"
 				       "Source/Universe.cpp"
+				       "Messages/Source/PlanetCoordinates.cpp"
 				       )
 
 
@@ -53,3 +54,11 @@ add_executable(Bin/Test/LoginUser3 "Test/Source/logingUser3.cpp"
 				     "Test/Source/tryToRegisterUser.cpp"
 				     "Common/Source/InitMessageQueue.cpp"
 				     "Test/Source/sendMessage.cpp")	
+				     
+add_executable(Bin/Test/AssignMotherPlanet "Test/Source/AssignMotherPlanet.cpp"
+				     "Test/Source/tryToLoginUser.cpp"
+				     "Test/Source/tryToRegisterUser.cpp"
+				     "Test/Source/tryToGetPlanetList.cpp"
+				     "Common/Source/InitMessageQueue.cpp"
+				     "Messages/Source/PlanetCoordinates.cpp"
+				     "Test/Source/sendMessage.cpp")
