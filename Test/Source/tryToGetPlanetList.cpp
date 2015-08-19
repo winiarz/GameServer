@@ -16,5 +16,11 @@ MsgGetPlanetListResp tryToGetPlanetList (int sessionId,  const MessageQueuesIds&
   sendMessage(queueIds, m1);
   ServerOutMessage PlanetListResp; 
   msgrcv ( queueIds.inputQueue, &PlanetListResp, sizeof(InnerServerOutMessage), 0, MSG_NOERROR );
+  if (PlanetListResp.msgType != msgIdGetPlanetListResp)
+  {
+    cout << "wrong message received: " << PlanetListResp.msgType
+	 << " expected: " << msgIdGetPlanetListResp << endl;
+        exit(-1);
+  }
   return PlanetListResp.innerMessage.msgGetPlanetListResp; 
 }

@@ -20,19 +20,19 @@ int main(int argc, char* argv[])
   int sessionId_2 = tryToLoginUser("mieciu", "password3", LogingSuccessful, queueIds);
   MsgGetPlanetListResp planetList_1;
   MsgGetPlanetListResp planetList_2;
-  const int expectedResult = 1;
+  const int expectedPlanetsNumber = 1;
   planetList_1 = tryToGetPlanetList (sessionId_1, queueIds);
   planetList_2 = tryToGetPlanetList (sessionId_2, queueIds);
-  if (planetList_1.currentPlanetsNumber !=  expectedResult)
+  if (planetList_1.currentPlanetsNumber !=  expectedPlanetsNumber)
     {
         cout << "wrong message received: " << planetList_1.currentPlanetsNumber
-	     << " expected: " << expectedResult << endl;
+	     << " expected: " << expectedPlanetsNumber << endl;
         exit(-1);
     }
-   if (planetList_2.currentPlanetsNumber !=  expectedResult)
+   if (planetList_2.currentPlanetsNumber !=  expectedPlanetsNumber)
     {
         cout << "wrong message received: " << planetList_2.currentPlanetsNumber
-	     << " expected: " << expectedResult << endl;
+	     << " expected: " << expectedPlanetsNumber << endl;
         exit(-1);
     }
     if (planetList_2.planetsCoordinates[0] ==  planetList_1.planetsCoordinates[0])
