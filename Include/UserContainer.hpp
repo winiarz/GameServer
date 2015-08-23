@@ -24,7 +24,7 @@ public:
     void assignMotherPlanet ();
     UserContainer ();
 private:
-    int static const maxUsersNumber = 100;
+    int static const maxUsersNumber = 1000;
     int currentNumberOfUsers = 0;
     SessionIdContainer sessionIdContainer;
     User user[maxUsersNumber];

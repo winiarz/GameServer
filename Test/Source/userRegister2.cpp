@@ -4,17 +4,17 @@
 #include "tryToRegisterUser.hpp"
 #include "sendMessage.hpp"
 #include <iostream>
+#include <string.h>
+
 using namespace std;
 
 int main(int argc, char* argv[])
 {
     MessageQueuesIds queueIds = initMessageQueues(argc, argv);
     startServer (queueIds);
-    char userName ;
-    for(int i=0;i < 100; i++)
+    for(int i=0;i < 1000; i++)
     {
-      userName = i;
-      tryToRegisterUser(& userName, "password", RegisterSuccessful, queueIds);
+      tryToRegisterUser(to_string(i), "password", RegisterSuccessful, queueIds);
     }
     tryToRegisterUser("winiarz", "password2", TooManyUsers, queueIds);
     shutdownServer (queueIds);
