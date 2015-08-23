@@ -64,11 +64,11 @@ void UserContainer::addUser (char username[], char password[], MessageQueuesIds 
 {
     if ( this -> isRegisterPossible(username, queueIds) )
         {
-        strcpy (user[currentNumberOfUsers].username, username);
-        strcpy (user[currentNumberOfUsers].password, password);
-	assignMotherPlanet ();
-        currentNumberOfUsers++;
-        sendingUserRegisterStatus (RegisterSuccessful, queueIds);
+	  strcpy (user[currentNumberOfUsers].username, username);
+	  strcpy (user[currentNumberOfUsers].password, password);
+	  assignMotherPlanet ();
+	  currentNumberOfUsers++;
+	  sendingUserRegisterStatus (RegisterSuccessful, queueIds);
         }
 }
 bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueIds)

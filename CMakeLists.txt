@@ -62,3 +62,8 @@ add_executable(Bin/Test/AssignMotherPlanet "Test/Source/AssignMotherPlanet.cpp"
 				     "Common/Source/InitMessageQueue.cpp"
 				     "Messages/Source/PlanetCoordinates.cpp"
 				     "Test/Source/sendMessage.cpp")
+				     
+add_executable(Bin/Test/RegisterUser[tooManyUsers] "Test/Source/userRegister2.cpp"
+						   "Test/Source/tryToRegisterUser.cpp"
+				                   "Common/Source/InitMessageQueue.cpp"
+						   "Test/Source/sendMessage.cpp")
