@@ -3,6 +3,7 @@
 #include"MsgUserRegisterResp.hpp"
 #include"SessionIdContainer.hpp"
 #include"MsgGetPlanetListResp.hpp"
+#include"MsgGetPlanetInfoResp.hpp"
 
 extern int secondsCounter;
 struct User
@@ -16,6 +17,8 @@ struct User
 class UserContainer
 {
 public:
+    bool isPlanetBelongingToPlayer (int userId, PlanetCoordinates planetCoordinates);
+    void getPlanetInfo (int sessionId, PlanetCoordinates planetCoordinates, MessageQueuesIds queueIds);
     void getPlanetList (int sessionId, MessageQueuesIds queueIds); 
     void addUser (char username[], char password[], MessageQueuesIds queueIds);
     bool  isRegisterPossible(char username[], MessageQueuesIds queueIds);
@@ -31,3 +34,5 @@ private:
 };
 void sendingUserRegisterStatus (UserRegisterStatus , MessageQueuesIds );
 void sendingUserPlanetsList (int currentPlanetsNumber, PlanetCoordinates planets[], MessageQueuesIds queueIds);
+void sendingPlanetInfo (bool isInfoAvaible, Resources resources, MessageQueuesIds queueIds);
+

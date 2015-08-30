@@ -1,6 +1,9 @@
 #pragma once
 #include "Planet.hpp"
 #include"MsgGetPlanetListResp.hpp"
+#include"MsgGetPlanetInfoResp.hpp"
+#include"PlanetCoordinates.hpp"
+
 class Universe
 {
 public:
@@ -10,6 +13,7 @@ public:
       return universe;
    }
    PlanetCoordinates randomFreePlanet ();
+   Resources getResourcesInfo (PlanetCoordinates planetCoordinates);
 private:
   int static const galaxiesNumber = 10;
   int static const systemsNumber = 1000;

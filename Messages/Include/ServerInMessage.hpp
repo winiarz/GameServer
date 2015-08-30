@@ -4,6 +4,7 @@
 #include "MsgUserRegisterReq.hpp"
 #include "MsgLogingReq.hpp"
 #include "MsgGetPlanetListReq.hpp"
+#include "MsgGetPlanetInfoReq.hpp"
 
 union InnerServerInMessage
 {
@@ -12,7 +13,7 @@ union InnerServerInMessage
     MsgUserRegisterReq msgUserRegisterReq;
     MsgLogingReq msgLogingReq;
     MsgGetPlanetListReq msgGetPlanetListReq;
-    
+    MsgGetPlanetInfoReq msgGetPlanetInfoReq;
 };
 
 struct ServerInMessage

@@ -83,6 +83,10 @@ int main(int argc, char* argv[])
 	case msgIdGetPlanetListReq:
 	  userContainer.getPlanetList (m1.innerMessage.msgGetPlanetListReq.sessionId, queueIds);
 	  break;
+	 case msgIdGetPlanetInfoReq:
+	   userContainer.getPlanetInfo(m1.innerMessage.msgGetPlanetInfoReq.sessionId, 
+					m1.innerMessage.msgGetPlanetInfoReq.planetCoordinates, queueIds);
+	  break; 
         }
     }
 }

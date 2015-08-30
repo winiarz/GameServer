@@ -10,10 +10,43 @@
 #include"SessionIdContainer.hpp"
 #include "Universe.hpp"
 #include"MsgGetPlanetListResp.hpp"
+
 UserContainer::UserContainer (): sessionIdContainer ()
 {
   
 }
+bool UserContainer::isPlanetBelongingToPlayer (int userId, PlanetCoordinates planetCoordinates)
+{
+  for (int i=0; i < user[userId].currentPlanetsNumber;i++)
+  {
+    if (planetCoordinates == user[userId].planets[i]) return true;
+  }
+ return false;
+}
+
+void UserContainer::getPlanetInfo (int sessionId, PlanetCoordinates planetCoordinates, MessageQueuesIds queueIds)
+{
+  if (sessionIdContainer.isUserLoged (sessionId))
+  {
+    int userId = sessionIdContainer.getUserId (sessionId);
+    if (isPlanetBelongingToPlayer(userId, planetCoordinates) )
+    {
+      Universe& universe = Universe::getUniverse();
+      Resources resources;
+      resources = universe.getResourcesInfo (planetCoordinates);
+      sendingPlanetInfo (true, resources, queueIds);
+    }
+    else
+    {
+      Resources resources;
+      resources.metal=0;
+      resources.crystal=0;
+      resources.deuter=0;
+      sendingPlanetInfo (false, resources, queueIds);
+    }
+  }
+}
+
 void UserContainer::getPlanetList (int sessionId, MessageQueuesIds queueIds)
 {
   if (sessionIdContainer.isUserLoged (sessionId))
