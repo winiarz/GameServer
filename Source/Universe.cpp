@@ -24,5 +24,6 @@ PlanetCoordinates Universe::randomFreePlanet ()
 }
 Resources Universe::getResourcesInfo (PlanetCoordinates planetCoordinates)
 {
+  universe[ planetCoordinates.galaxy][ planetCoordinates.system][ planetCoordinates.planet].addResources ();
   return universe[planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].resources; 
 }
