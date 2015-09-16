@@ -2,7 +2,7 @@
 
 Planet::Planet ()
 {
-  settled = false;
+  publicPlanetInfo.ownerUserId = -1;
   resources.metal = 0;
   resources.crystal = 0;
   resources.deuter = 0;

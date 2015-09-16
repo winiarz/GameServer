@@ -8,7 +8,7 @@
 #include <sys/msg.h>
 using namespace std;
 
-void tryToRegisterUser(string username, string pass, UserRegisterStatus expectedResult, const MessageQueuesIds& queueIds)
+int tryToRegisterUser(string username, string pass, UserRegisterStatus expectedResult, const MessageQueuesIds& queueIds)
 {
     ServerInMessage m1;
     m1.msgType = msgIdUserRegisterReq;
@@ -23,5 +23,5 @@ void tryToRegisterUser(string username, string pass, UserRegisterStatus expected
 	     << " expected: " << expectedResult << endl;
         exit(-1);
     }
-
+  return registerResp.innerMessage.msgUserRegisterResp.userId;
 }

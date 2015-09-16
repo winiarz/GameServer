@@ -12,4 +12,5 @@ enum UserRegisterStatus
 struct MsgUserRegisterResp
 {
 UserRegisterStatus userRegisterStatus;
+int  userId;
 };

@@ -15,6 +15,29 @@ UserContainer::UserContainer (): sessionIdContainer ()
 {
   
 }
+void UserContainer::getStarSystemInfo (int sessionId, int galaxy, int system,  MessageQueuesIds queueIds)
+{
+  if (sessionIdContainer.isUserLoged (sessionId))
+  {
+    PublicPlanetInfo publicPlanetInfo[10]; // uwaga działa tylko na standardowym uniwersum
+    Universe& universe = Universe::getUniverse();
+    universe.getStarSystemInfo (galaxy, system, publicPlanetInfo);
+    sendingPublicPlanetInfo (publicPlanetInfo, queueIds);
+  }
+}
+/*
+PlanetCoordinates* UserContainer::getSettledPlanetsCoordinates ()
+{
+  PlanetCoordinates * planetCoordinates = NULL;
+ for (int i=0;i<currentNumberOfUsers;i++)
+ {
+   for (int j=0; i < user[i].currentPlanetsNumber;j++)
+   {
+      PlanetCoordinates *
+   }
+ }
+}
+*/
 bool UserContainer::isPlanetBelongingToPlayer (int userId, PlanetCoordinates planetCoordinates)
 {
   for (int i=0; i < user[userId].currentPlanetsNumber;i++)
@@ -57,10 +80,10 @@ void UserContainer::getPlanetList (int sessionId, MessageQueuesIds queueIds)
   
 }
 
-void UserContainer::assignMotherPlanet ()
+void UserContainer::assignMotherPlanet (int userId)
 {
   Universe& universe = Universe::getUniverse();
-  user[currentNumberOfUsers].planets[0] = universe.randomFreePlanet();
+  user[currentNumberOfUsers].planets[0] = universe.randomFreePlanet(userId);
   user[currentNumberOfUsers].currentPlanetsNumber = 1; 
 }
 
@@ -99,9 +122,9 @@ void UserContainer::addUser (char username[], char password[], MessageQueuesIds 
         {
 	  strcpy (user[currentNumberOfUsers].username, username);
 	  strcpy (user[currentNumberOfUsers].password, password);
-	  assignMotherPlanet ();
+	  assignMotherPlanet (currentNumberOfUsers);
+	  sendingUserRegisterStatus (RegisterSuccessful, currentNumberOfUsers, queueIds);
 	  currentNumberOfUsers++;
-	  sendingUserRegisterStatus (RegisterSuccessful, queueIds);
         }
 }
 bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueIds)
@@ -110,7 +133,7 @@ bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueI
     if (currentNumberOfUsers == maxUsersNumber)
      {
      possibleToRegist = false;
-     sendingUserRegisterStatus (TooManyUsers, queueIds);
+     sendingUserRegisterStatus (TooManyUsers, -1, queueIds);
      }
     else
     {
@@ -119,7 +142,7 @@ bool  UserContainer::isRegisterPossible(char username[], MessageQueuesIds queueI
             if (strcmp(user[i].username, username ) == 0)
             {
             possibleToRegist = false;
-            sendingUserRegisterStatus (UsernameAlreadyUsed, queueIds);
+            sendingUserRegisterStatus (UsernameAlreadyUsed, -1, queueIds);
             }
         }
     }

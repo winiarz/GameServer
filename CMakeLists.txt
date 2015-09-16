@@ -89,6 +89,16 @@ add_executable(Bin/Test/planetInfo_3   "Test/Source/planetsInfo_3.cpp"
 				     "Common/Source/InitMessageQueue.cpp"
 				     "Messages/Source/PlanetCoordinates.cpp"
 				     "Test/Source/sendMessage.cpp")
+				     	     
+add_executable(Bin/Test/publicPlanetInfo  "Test/Source/publicPlanetInfo.cpp"
+				     "Test/Source/tryToLoginUser.cpp"
+				     "Test/Source/tryToRegisterUser.cpp"
+				     "Test/Source/tryToGetPlanetList.cpp"
+				     "Test/Source/tryToGetPlanetInfo.cpp"
+				     "Test/Source/tryToGetPublicPlanetInfo.cpp"
+				     "Common/Source/InitMessageQueue.cpp"
+				     "Messages/Source/PlanetCoordinates.cpp"
+				     "Test/Source/sendMessage.cpp")
 				     
 add_executable(Bin/Test/RegisterUser[tooManyUsers] "Test/Source/userRegister2.cpp"
 						   "Test/Source/tryToRegisterUser.cpp"

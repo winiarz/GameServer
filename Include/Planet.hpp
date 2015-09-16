@@ -1,6 +1,7 @@
 #pragma once
 #include"MsgGetPlanetInfoResp.hpp"
 #include"UserContainer.hpp"
+#include"MsgStarSystemInfoResp.hpp"
 
 
 class Planet
@@ -8,7 +9,8 @@ class Planet
 public:
   Planet ();
   void addResources ();
-  bool settled;
+  
+  PublicPlanetInfo publicPlanetInfo;
   Resources resources;
 private:
   int static const metalGain = 100;

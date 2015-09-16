@@ -7,7 +7,15 @@ Universe::Universe ()
 {
   
 }
-PlanetCoordinates Universe::randomFreePlanet ()
+void Universe::getStarSystemInfo (int galaxy, int system, PublicPlanetInfo publicPlanetInfo[])
+{
+  for (int i=0;i<planetsNumber;i++)
+  {
+    publicPlanetInfo[i] = universe [galaxy][system][i].publicPlanetInfo;
+  }
+}
+
+PlanetCoordinates Universe::randomFreePlanet (int userId)
 {
   PlanetCoordinates planetCoordinates;
   while (true)
@@ -15,9 +23,9 @@ PlanetCoordinates Universe::randomFreePlanet ()
     planetCoordinates.galaxy = rand() % galaxiesNumber;
     planetCoordinates.system = rand() % systemsNumber;
     planetCoordinates.planet = rand() % planetsNumber;
-    if (universe [planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].settled == false)
+    if (universe [planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].publicPlanetInfo.ownerUserId == -1)
     {
-     universe [planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].settled = true;
+     universe [planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].publicPlanetInfo.ownerUserId = userId;
      return planetCoordinates;
     }
   }

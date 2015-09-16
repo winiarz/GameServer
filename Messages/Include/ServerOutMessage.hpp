@@ -4,6 +4,7 @@
 #include "MsgLogingResp.hpp"
 #include "MsgGetPlanetListResp.hpp"
 #include"MsgGetPlanetInfoResp.hpp"
+#include"MsgStarSystemInfoResp.hpp"
 
 union InnerServerOutMessage
 {
@@ -12,6 +13,7 @@ MsgUserRegisterResp msgUserRegisterResp;
 MsgLogingResp msgLogingResp;
 MsgGetPlanetListResp msgGetPlanetListResp;
 MsgGetPlanetInfoResp msgGetPlanetInfoResp;
+MsgStarSystemInfoResp  msgStarSystemInfoResp;
 };
 
 

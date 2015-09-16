@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
         if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password, queueIds);
             else
             {
-            sendingUserRegisterStatus (ServerNotRunning, queueIds);
+            sendingUserRegisterStatus (ServerNotRunning, -1, queueIds);
             }
             break;
 	case msgIdLogingReq:
@@ -87,6 +87,11 @@ int main(int argc, char* argv[])
 	   userContainer.getPlanetInfo(m1.innerMessage.msgGetPlanetInfoReq.sessionId, 
 					m1.innerMessage.msgGetPlanetInfoReq.planetCoordinates, queueIds);
 	  break; 
+	  case msgIdStarSystemInfoReq:
+	    userContainer.getStarSystemInfo (m1.innerMessage.msgStarSystemInfoReq.sessionId, 
+					     m1.innerMessage.msgStarSystemInfoReq.galaxy, 
+					  m1.innerMessage.msgStarSystemInfoReq.system, queueIds);
+	    break;
         }
     }
 }

@@ -8,10 +8,11 @@
 #include"SendingFunctions.hpp"
 #include"UserContainer.hpp"
 
-void sendingUserRegisterStatus (UserRegisterStatus userRegisterStatus, MessageQueuesIds queueIds)
+void sendingUserRegisterStatus (UserRegisterStatus userRegisterStatus, int userId, MessageQueuesIds queueIds)
 {
     MsgUserRegisterResp resp;
     resp.userRegisterStatus = userRegisterStatus;
+    resp.userId = userId;
     ServerOutMessage serverOutMessage;
     serverOutMessage.msgType = msgIdUserRegisterResp;
     serverOutMessage.innerMessage.msgUserRegisterResp = resp;
@@ -60,5 +61,17 @@ void sendingPlanetInfo (bool isInfoAvaible, Resources resources, MessageQueuesId
   ServerOutMessage serverOutMessage;
   serverOutMessage.msgType = msgIdGetPlanetInfoResp;
   serverOutMessage.innerMessage.msgGetPlanetInfoResp = resp;
+  msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+}
+void sendingPublicPlanetInfo (PublicPlanetInfo publicPlanetInfo[],  MessageQueuesIds queueIds)
+{
+  MsgStarSystemInfoResp resp;
+  for (int i=0;i<10;i++)
+  {
+    resp.publicPlanetInfo[i] = publicPlanetInfo[i];
+  }
+  ServerOutMessage serverOutMessage;
+  serverOutMessage.msgType = msgIdStarSystemInfoResp;
+  serverOutMessage.innerMessage.msgStarSystemInfoResp = resp;
   msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
 }

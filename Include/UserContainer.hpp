@@ -4,6 +4,7 @@
 #include"SessionIdContainer.hpp"
 #include"MsgGetPlanetListResp.hpp"
 #include"MsgGetPlanetInfoResp.hpp"
+#include"MsgStarSystemInfoResp.hpp"
 
 extern int secondsCounter;
 struct User
@@ -17,6 +18,8 @@ struct User
 class UserContainer
 {
 public:
+    void getStarSystemInfo (int sessionId, int galaxy, int system,  MessageQueuesIds queueIds);
+    //PlanetCoordinates* getSettledPlanetsCoordinates ();
     bool isPlanetBelongingToPlayer (int userId, PlanetCoordinates planetCoordinates);
     void getPlanetInfo (int sessionId, PlanetCoordinates planetCoordinates, MessageQueuesIds queueIds);
     void getPlanetList (int sessionId, MessageQueuesIds queueIds); 
@@ -24,7 +27,7 @@ public:
     bool  isRegisterPossible(char username[], MessageQueuesIds queueIds);
     void loginUser (char username[], char password[], MessageQueuesIds queueIds);
     void  isLogingPossible(char username[],char password[], MessageQueuesIds queueIds);
-    void assignMotherPlanet ();
+    void assignMotherPlanet (int userId);
     UserContainer ();
 private:
     int static const maxUsersNumber = 1000;
