@@ -1,5 +1,7 @@
 #!/bin/bash
 
+guardTimer=3
+
 testBin=$1
 msgQueueId=123
 msgQueueId2=124
@@ -7,8 +9,8 @@ msgQueueId2=124
 logsDir=logs
 
 mkdir -p $logsDir
-Bin/SpaceStrategyServer $msgQueueId $msgQueueId2 2>&1 > $logsDir/server.out &
-Bin/Test/$testBin $msgQueueId2 $msgQueueId           2>&1 > $logsDir/test.out &
+timeout $guardTimer Bin/SpaceStrategyServer $msgQueueId $msgQueueId2 2>&1 > $logsDir/server.out &
+timeout $guardTimer Bin/Test/$testBin $msgQueueId2 $msgQueueId           2>&1 > $logsDir/test.out &
 testPid=$!
 
 wait $testPid
