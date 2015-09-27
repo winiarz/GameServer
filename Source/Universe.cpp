@@ -25,13 +25,14 @@ PlanetCoordinates Universe::randomFreePlanet (int userId)
     planetCoordinates.planet = rand() % planetsNumber;
     if (universe [planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].publicPlanetInfo.ownerUserId == -1)
     {
+      universe [planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].randomPlanetSize();
      universe [planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].publicPlanetInfo.ownerUserId = userId;
      return planetCoordinates;
     }
   }
 }
-Resources Universe::getResourcesInfo (PlanetCoordinates planetCoordinates)
+PrivatePlanetInfo Universe::getPrivatePlanetInfo (PlanetCoordinates planetCoordinates)
 {
   universe[ planetCoordinates.galaxy][ planetCoordinates.system][ planetCoordinates.planet].addResources ();
-  return universe[planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].resources; 
+  return universe[planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].getPrivatePlanetInfo(); 
 }

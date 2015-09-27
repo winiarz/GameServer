@@ -55,17 +55,18 @@ void UserContainer::getPlanetInfo (int sessionId, PlanetCoordinates planetCoordi
     if (isPlanetBelongingToPlayer(userId, planetCoordinates) )
     {
       Universe& universe = Universe::getUniverse();
-      Resources resources;
-      resources = universe.getResourcesInfo (planetCoordinates);
-      sendingPlanetInfo (true, resources, queueIds);
+      PrivatePlanetInfo privatePlanetInfo;
+      privatePlanetInfo = universe.getPrivatePlanetInfo (planetCoordinates);
+      sendingPlanetInfo (true, privatePlanetInfo, queueIds);
     }
     else
     {
-      Resources resources;
-      resources.metal=0;
-      resources.crystal=0;
-      resources.deuter=0;
-      sendingPlanetInfo (false, resources, queueIds);
+      PrivatePlanetInfo privatePlanetInfo;
+      privatePlanetInfo.resources.metal=0;
+      privatePlanetInfo.resources.crystal=0;
+      privatePlanetInfo.resources.deuter=0;
+      privatePlanetInfo.planetSize = -1;
+      sendingPlanetInfo (false, privatePlanetInfo, queueIds);
     }
   }
 }

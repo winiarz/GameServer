@@ -14,7 +14,7 @@ public:
       return universe;
    }
    PlanetCoordinates randomFreePlanet (int userId);
-   Resources getResourcesInfo (PlanetCoordinates planetCoordinates);
+   PrivatePlanetInfo getPrivatePlanetInfo (PlanetCoordinates planetCoordinates);
    void getStarSystemInfo (int galaxy, int system, PublicPlanetInfo publicPlanetInfo[]);
 private:
   int static const galaxiesNumber = 10;

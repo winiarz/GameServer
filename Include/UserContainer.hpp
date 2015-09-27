@@ -37,5 +37,4 @@ private:
 };
 void sendingUserRegisterStatus (UserRegisterStatus , MessageQueuesIds );
 void sendingUserPlanetsList (int currentPlanetsNumber, PlanetCoordinates planets[], MessageQueuesIds queueIds);
-void sendingPlanetInfo (bool isInfoAvaible, Resources resources, MessageQueuesIds queueIds);
 

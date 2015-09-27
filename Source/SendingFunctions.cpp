@@ -51,13 +51,14 @@ void sendingUserPlanetsList (int currentPlanetsNumber, PlanetCoordinates planets
   serverOutMessage.innerMessage.msgGetPlanetListResp = resp;
   msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
 }
-void sendingPlanetInfo (bool isInfoAvaible, Resources resources, MessageQueuesIds queueIds)
+void sendingPlanetInfo (bool isInfoAvaible, PrivatePlanetInfo privatePlanetInfo, MessageQueuesIds queueIds)
 {
   MsgGetPlanetInfoResp resp;
   resp.isInfoAvaible = isInfoAvaible;
-  resp.resources.metal = resources.metal;
-  resp.resources.crystal = resources.crystal;
-  resp.resources.deuter = resources.deuter;
+  resp.resources.metal = privatePlanetInfo.resources.metal;
+  resp.resources.crystal = privatePlanetInfo.resources.crystal;
+  resp.resources.deuter = privatePlanetInfo.resources.deuter;
+  resp.planetSize = privatePlanetInfo.planetSize;
   ServerOutMessage serverOutMessage;
   serverOutMessage.msgType = msgIdGetPlanetInfoResp;
   serverOutMessage.innerMessage.msgGetPlanetInfoResp = resp;

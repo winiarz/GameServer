@@ -10,4 +10,5 @@ struct MsgGetPlanetInfoResp
 {
 bool isInfoAvaible;
 Resources resources;
+int planetSize;
 };
