@@ -16,6 +16,8 @@ public:
    PlanetCoordinates randomFreePlanet (int userId);
    PrivatePlanetInfo getPrivatePlanetInfo (PlanetCoordinates planetCoordinates);
    void getStarSystemInfo (int galaxy, int system, PublicPlanetInfo publicPlanetInfo[]);
+   void addBuilding (Resources buildingCost, PlanetCoordinates planetCoordinates, 
+		     ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds);
 private:
   int static const galaxiesNumber = 10;
   int static const systemsNumber = 1000;

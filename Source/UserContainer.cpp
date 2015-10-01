@@ -8,12 +8,81 @@
 #include"MsgUserRegisterResp.hpp"
 #include "SendingFunctions.hpp"
 #include"SessionIdContainer.hpp"
-#include "Universe.hpp"
 #include"MsgGetPlanetListResp.hpp"
+#include "Universe.hpp"
+
+
 
 UserContainer::UserContainer (): sessionIdContainer ()
 {
   
+}
+void UserContainer::placeBuildingOnPlanet (int userId, int planetIdx, PlanetCoordinates planetCoordinates,
+					   ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds)
+{
+  Universe& universe = Universe::getUniverse();
+  PrivatePlanetInfo privatePlanetInfo = universe.getPrivatePlanetInfo (user[userId].planets[planetIdx]);
+  Resources buildingCost;
+  buildingCost = countBuildingCost (privatePlanetInfo, objectToBuildType);
+  
+}
+Resources UserContainer::countBuildingCost (PrivatePlanetInfo privatePlanetInfo, ObjectToBuildType objectToBuildType)
+{
+  Resources cost;
+  if (objectToBuildType == MetalMine)
+  {
+    long long buildingMetalCost = 1;
+    long long buildingCrystalCost = 1;
+    for (int i=0;i<privatePlanetInfo.buildings.metalMineLvl;i++)
+    {
+      buildingMetalCost = buildingMetalCost*1.2;
+      buildingCrystalCost = buildingCrystalCost*1.2;
+    }
+    buildingMetalCost = buildingMetalCost*privatePlanetInfo.buildings.metalMineLvl*5;
+    buildingCrystalCost = buildingCrystalCost*privatePlanetInfo.buildings.metalMineLvl*3;
+    cost.metal = buildingMetalCost;
+    cost.crystal = buildingCrystalCost;
+    cost.deuter = 0;
+  }
+  return cost;
+}
+bool UserContainer::isBuildingPossible (int userId, int planetIdx, ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds)
+{
+  if (user[userId].currentPlanetsNumber > planetIdx && planetIdx >= 0)
+    {
+      Universe& universe = Universe::getUniverse();
+      PrivatePlanetInfo privatePlanetInfo = universe.getPrivatePlanetInfo (user[userId].planets[planetIdx]);
+      Resources buildingCost;
+      buildingCost = countBuildingCost (privatePlanetInfo, objectToBuildType);
+      
+	if (privatePlanetInfo.resources.metal >= buildingCost.metal || privatePlanetInfo.resources.crystal >= buildingCost.crystal)
+	{
+	  //here have to write thing that check is some building is being built currently 
+	}
+	else
+	{
+	 sendingBuildStatus (InsufficientResources,  queueIds); 
+	 return false;
+	}
+      
+    }
+    else
+    {
+      sendingBuildStatus (WrongPlanet,  queueIds);
+      return false;
+    }
+    return true;
+}
+void UserContainer::build (int sessionId, int planetIdx, ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds)
+{
+  int userId = sessionIdContainer.getUserId (sessionId);
+  if (sessionIdContainer.isUserLoged (sessionId))
+  {
+    if(isBuildingPossible (userId, planetIdx, objectToBuildType, queueIds))
+    {
+      placeBuildingOnPlanet (userId, planetIdx, user[userId].planets[planetIdx], objectToBuildType, queueIds);
+    }
+  }
 }
 void UserContainer::getStarSystemInfo (int sessionId, int galaxy, int system,  MessageQueuesIds queueIds)
 {

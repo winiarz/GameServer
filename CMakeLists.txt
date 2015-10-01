@@ -18,7 +18,9 @@ add_library(TestUtils "Test/Source/getServerStatus.cpp"
                       "Test/Source/tryToGetPlanetInfo.cpp"
                       "Test/Source/tryToGetPublicPlanetInfo.cpp")
 
-add_library(Messages "Messages/Source/PlanetCoordinates.cpp")
+add_library(Messages "Messages/Source/PlanetCoordinates.cpp"
+		      "Messages/Source/Resources.cpp"
+		      )
 
 set(ServerLibs CommonUtils Messages)
 
@@ -29,6 +31,7 @@ add_executable(Bin/SpaceStrategyServer "Source/main.cpp"
 				       "Source/SessionIdContainer.cpp"
 				       "Source/Planet.cpp"
 				       "Source/Universe.cpp"
+				       "Source/PrivatePlanetInfo.cpp"
 				       )
 target_link_libraries(Bin/SpaceStrategyServer ${ServerLibs})
 

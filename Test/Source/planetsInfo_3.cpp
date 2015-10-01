@@ -48,6 +48,7 @@ int main(int argc, char* argv[])
 	     << " expected: " <<  "metal should be equal 1, because time = 36" << endl;
         exit(-1);
   }
+  
   timeElapsed(36,  queueIds);
   planetInfo_1 = tryToGetPlanetInfo (sessionId_1, planetList.planetsCoordinates[0], queueIds);
   if (planetInfo_1.isInfoAvaible == false)

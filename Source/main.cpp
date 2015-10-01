@@ -65,33 +65,37 @@ int main(int argc, char* argv[])
                  secondsCounter++;
 		}
             }
-            break;
-        case msgIdServerStatusReq:
-            DEBUG << "Server status req received";
-            sendingServerStatus (isServerRunning,  queueIds);
-            break;
-        case msgIdUserRegisterReq:
-        if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password, queueIds);
-            else
-            {
-            sendingUserRegisterStatus (ServerNotRunning, -1, queueIds);
-            }
-            break;
-	case msgIdLogingReq:
-	    userContainer.loginUser(m1.innerMessage.msgLogingReq.userName, m1.innerMessage.msgLogingReq.password, queueIds);
-            break;
-	case msgIdGetPlanetListReq:
-	  userContainer.getPlanetList (m1.innerMessage.msgGetPlanetListReq.sessionId, queueIds);
-	  break;
-	 case msgIdGetPlanetInfoReq:
-	   userContainer.getPlanetInfo(m1.innerMessage.msgGetPlanetInfoReq.sessionId, 
-					m1.innerMessage.msgGetPlanetInfoReq.planetCoordinates, queueIds);
-	  break; 
-	  case msgIdStarSystemInfoReq:
-	    userContainer.getStarSystemInfo (m1.innerMessage.msgStarSystemInfoReq.sessionId, 
-					     m1.innerMessage.msgStarSystemInfoReq.galaxy, 
-					  m1.innerMessage.msgStarSystemInfoReq.system, queueIds);
-	    break;
+	      break;
+	    case msgIdServerStatusReq:
+	      DEBUG << "Server status req received";
+	      sendingServerStatus (isServerRunning,  queueIds);
+	      break;
+	    case msgIdUserRegisterReq:
+	    if (isServerRunning) userContainer.addUser(m1.innerMessage.msgUserRegisterReq.userName, m1.innerMessage.msgUserRegisterReq.password, queueIds);
+	      else
+	      {
+	      sendingUserRegisterStatus (ServerNotRunning, -1, queueIds);
+	      }
+	      break;
+	    case msgIdLogingReq:
+	      userContainer.loginUser(m1.innerMessage.msgLogingReq.userName, m1.innerMessage.msgLogingReq.password, queueIds);
+	      break;
+	    case msgIdGetPlanetListReq:
+	    userContainer.getPlanetList (m1.innerMessage.msgGetPlanetListReq.sessionId, queueIds);
+	      break;
+	    case msgIdGetPlanetInfoReq:
+	    userContainer.getPlanetInfo(m1.innerMessage.msgGetPlanetInfoReq.sessionId, 
+					  m1.innerMessage.msgGetPlanetInfoReq.planetCoordinates, queueIds);
+	      break; 
+	    case msgIdStarSystemInfoReq:
+	      userContainer.getStarSystemInfo (m1.innerMessage.msgStarSystemInfoReq.sessionId, 
+					      m1.innerMessage.msgStarSystemInfoReq.galaxy, 
+					    m1.innerMessage.msgStarSystemInfoReq.system, queueIds);
+	      break;
+	    case msgIdBuildReq:
+	      userContainer.build(m1.innerMessage.msgBuildReq.sessionId, m1.innerMessage.msgBuildReq.planetIdx, 
+				  m1.innerMessage.msgBuildReq.objectToBuildType, queueIds);
+	      break;
         }
     }
 }

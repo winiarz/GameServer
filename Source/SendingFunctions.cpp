@@ -55,7 +55,7 @@ void sendingPlanetInfo (bool isInfoAvaible, PrivatePlanetInfo privatePlanetInfo,
 {
   MsgGetPlanetInfoResp resp;
   resp.isInfoAvaible = isInfoAvaible;
-  resp.resources.metal = privatePlanetInfo.resources.metal;
+  resp.resources.metal = privatePlanetInfo.resources.metal/1000;
   resp.resources.crystal = privatePlanetInfo.resources.crystal;
   resp.resources.deuter = privatePlanetInfo.resources.deuter;
   resp.planetSize = privatePlanetInfo.planetSize;
@@ -74,5 +74,14 @@ void sendingPublicPlanetInfo (PublicPlanetInfo publicPlanetInfo[],  MessageQueue
   ServerOutMessage serverOutMessage;
   serverOutMessage.msgType = msgIdStarSystemInfoResp;
   serverOutMessage.innerMessage.msgStarSystemInfoResp = resp;
+  msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
+}
+void sendingBuildStatus (BuildStartStatus buildStatus,  MessageQueuesIds queueIds)
+{
+  MsgBuildResp resp;
+  resp.buildStatus = buildStatus;
+  ServerOutMessage serverOutMessage;
+  serverOutMessage.msgType = msgIdBuildResp;
+  serverOutMessage.innerMessage.msgBuildResp = resp;
   msgsnd( queueIds.outputQueue, &serverOutMessage, sizeof(InnerServerOutMessage), 0 );
 }

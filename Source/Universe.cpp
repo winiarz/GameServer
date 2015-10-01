@@ -7,6 +7,12 @@ Universe::Universe ()
 {
   
 }
+void Universe::addBuilding (Resources buildingCost, PlanetCoordinates planetCoordinates, 
+		     ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds)
+{
+  universe[planetCoordinates.galaxy][planetCoordinates.system][planetCoordinates.planet].
+	    addBuilding(buildingCost, objectToBuildType, queueIds);
+}
 void Universe::getStarSystemInfo (int galaxy, int system, PublicPlanetInfo publicPlanetInfo[])
 {
   for (int i=0;i<planetsNumber;i++)

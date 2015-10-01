@@ -1,10 +1,11 @@
 #pragma once
 #include "InitMessageQueue.hpp"
-#include"MsgUserRegisterResp.hpp"
 #include"SessionIdContainer.hpp"
-#include"MsgGetPlanetListResp.hpp"
-#include"MsgGetPlanetInfoResp.hpp"
-#include"MsgStarSystemInfoResp.hpp"
+#include "ServerInMessage.hpp"
+#include "ServerOutMessage.hpp"
+#include"PrivatePlanetInfo.hpp"
+
+
 
 extern int secondsCounter;
 struct User
@@ -18,6 +19,11 @@ struct User
 class UserContainer
 {
 public:
+    void placeBuildingOnPlanet (int UserId, int planetIdx, PlanetCoordinates planetCoordinates,
+				ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds);
+    Resources countBuildingCost (PrivatePlanetInfo privatePlanetInfo, ObjectToBuildType objectToBuildType);
+    bool isBuildingPossible (int UserId, int planetIdx, ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds);
+    void build (int sessionId, int planetIdx, ObjectToBuildType objectToBuildType, MessageQueuesIds queueIds);
     void getStarSystemInfo (int sessionId, int galaxy, int system,  MessageQueuesIds queueIds);
     //PlanetCoordinates* getSettledPlanetsCoordinates ();
     bool isPlanetBelongingToPlayer (int userId, PlanetCoordinates planetCoordinates);
