@@ -36,7 +36,7 @@ add_executable(Bin/SpaceStrategyServer "Source/main.cpp"
 target_link_libraries(Bin/SpaceStrategyServer ${ServerLibs})
 
 
-set(TestLibs TestUtils CommonUtils Messages) 
+set(TestLibs TestUtils CommonUtils Messages gtest -pthread) 
 
 add_executable(Bin/Test/ServerStartAndPauze "Test/Source/ServerStartAndPauze.cpp")
 target_link_libraries(Bin/Test/ServerStartAndPauze ${TestLibs})
@@ -56,7 +56,8 @@ target_link_libraries(Bin/Test/LoginUser2 ${TestLibs})
 add_executable(Bin/Test/LoginUser3 "Test/Source/logingUser3.cpp")
 target_link_libraries(Bin/Test/LoginUser3 ${TestLibs})
 				     
-add_executable(Bin/Test/AssignMotherPlanet "Test/Source/AssignMotherPlanet.cpp")
+add_executable(Bin/Test/AssignMotherPlanet "Test/Source/AssignMotherPlanet.cpp"
+                                           "Test/Source/GtestMain.cpp")
 target_link_libraries(Bin/Test/AssignMotherPlanet ${TestLibs})
 				     
 add_executable(Bin/Test/planetInfo "Test/Source/planetsInfo.cpp")

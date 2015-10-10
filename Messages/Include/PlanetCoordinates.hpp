@@ -2,7 +2,8 @@
 
 struct PlanetCoordinates
 {
-  bool operator== (PlanetCoordinates& planetCoordinates_2);
+  bool operator== (const PlanetCoordinates& planetCoordinates_2) const;
+  bool operator!= (const PlanetCoordinates& planetCoordinates_2) const;
   int galaxy;
   int system;
   int planet;
