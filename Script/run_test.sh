@@ -6,7 +6,7 @@ testBin=$1
 msgQueueId=123
 msgQueueId2=124
 
-logsDir=logs
+logsDir="logs/$testBin"
 
 mkdir -p $logsDir
 timeout $guardTimer Bin/SpaceStrategyServer $msgQueueId $msgQueueId2 2>&1 > $logsDir/server.out &
